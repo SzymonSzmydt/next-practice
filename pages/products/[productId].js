@@ -1,22 +1,21 @@
 import { useRouter } from "next/router";
+import Link from "next/link";
 
-function Product({ product }) {
+export default function Product({ product }) {
   const router = useRouter();
 
   if (router.isFallback) {
-    return <div> Loading... </div>;
+    return <div> Loading...</div>;
   }
   return (
-    <>
-      <h2>
-        {product.id} {product.title} {product.price}
-      </h2>
+    <div>
+      <p> {product.title} </p>
+      <p> {product.price} </p>
       <p> {product.description}</p>
-    </>
+      <Link href="/products"> Wróć </Link>
+    </div>
   );
 }
-
-export default Product;
 
 export async function getStaticProps(context) {
   const { params } = context;
@@ -24,7 +23,6 @@ export async function getStaticProps(context) {
     `http://localhost:4000/products/${params.productId}`
   );
   const data = await response.json();
-
   return {
     props: {
       product: data,
@@ -34,7 +32,11 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { productId: "1" } }],
+    paths: [
+      {
+        params: { productId: "1" },
+      },
+    ],
     fallback: true,
   };
 }

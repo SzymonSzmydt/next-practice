@@ -1,29 +1,28 @@
-function ProductList({ products }) {
+import Link from "next/link";
+
+function ProductList({ product }) {
   return (
     <>
-      <h1> List of Products </h1>
-      {products.map((product) => (
-        <div key={product.id}>
-          <h2>
-            {product.id} {product.title} {product.price}
-          </h2>
-          <hr />
-        </div>
+      <h1> Produuct List </h1>
+      {product.map((item) => (
+        <Link href={`products/${item.id}`} key={item.id}>
+          <p>
+            {item.id} {item.title} {item.price}
+          </p>
+        </Link>
       ))}
     </>
   );
 }
 
-export default ProductList;
-
 export async function getStaticProps() {
-  console.log("Generating / Regenerating ProductList");
   const response = await fetch("http://localhost:4000/products");
   const data = await response.json();
   return {
     props: {
-      products: data,
+      product: data,
     },
-    revalidate: 10,
   };
 }
+
+export default ProductList;
