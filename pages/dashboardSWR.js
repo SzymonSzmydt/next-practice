@@ -14,10 +14,10 @@ function DashboardSWR() {
   return (
     <div>
       <h2>Dashboard</h2>
-      <h2>Posts - {dashboardData.posts}</h2>
-      <h2>Likes - {dashboardData.likes}</h2>
-      <h2>Followers - {dashboardData.followers}</h2>
-      <h2>Following - {dashboardData.following}</h2>
+      <h2>Posts - {data.posts}</h2>
+      <h2>Likes - {data.likes}</h2>
+      <h2>Followers - {data.followers}</h2>
+      <h2>Following - {data.following}</h2>
     </div>
   );
 }
