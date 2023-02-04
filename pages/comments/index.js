@@ -18,8 +18,27 @@ function CommentsPage() {
         "Content-Type": "application/json",
       },
     });
-    const data = await response.json();
-    console.log(data);
+  };
+
+  const deleteComment = async (commentId) => {
+    const response = await fetch(`/api/comments/${commentId}`, {
+      method: "DELETE",
+    });
+    fetchComments();
+  };
+
+  const modyfyComment = async (commentId, commentText) => {
+    const text = prompt("Zmień komentarz", commentText);
+    if (text !== null) {
+      const response = await fetch(`/api/comments/`, {
+        method: "PATCH",
+        body: JSON.stringify({ id: commentId, text: text }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      fetchComments();
+    }
   };
   return (
     <>
@@ -33,6 +52,10 @@ function CommentsPage() {
       {comments.map((comment) => (
         <div key={comment.id}>
           {comment.id} {comment.text}
+          <button onClick={() => deleteComment(comment.id)}> Delete </button>
+          <button onClick={() => modyfyComment(comment.id, comment.text)}>
+            Modyfy
+          </button>
         </div>
       ))}
     </>
